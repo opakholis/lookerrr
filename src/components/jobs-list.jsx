@@ -22,7 +22,7 @@ export const JobsList = () => {
   return (
     <div
       id="jobs"
-      className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-12"
+      className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
     >
       <div className="md:masonry-2-col lg:masonry-3-col">
         {jobs && jobs.data.map((job) => <Job key={job.id} data={job} />)}
