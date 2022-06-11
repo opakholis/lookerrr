@@ -1,5 +1,15 @@
+import { Navigation } from './components/navigation';
+import { Hero } from './components/hero';
+import { JobsList } from './components/jobs-list';
+
 function App() {
-  return <h1 class="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <>
+      <Navigation />
+      <Hero />
+      <JobsList />
+    </>
+  );
 }
 
 export default App;
