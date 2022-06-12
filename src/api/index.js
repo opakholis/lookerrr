@@ -8,4 +8,8 @@ const getJobById = (id) => {
   return client.get(`/job-vacancy/${id}`);
 };
 
-export { getAllJobs, getJobById };
+const login = ({ email, password }) => {
+  return client.post('/login', { email, password });
+};
+
+export { getAllJobs, getJobById, login };

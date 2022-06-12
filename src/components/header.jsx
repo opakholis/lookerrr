@@ -1,5 +1,6 @@
 import { AccountIcon, MenuIcon } from './icons';
 import Logo from '../logo.svg';
+import { Link } from 'react-router-dom';
 
 const NavItem = [
   {
@@ -46,13 +47,13 @@ export const Header = () => {
           <div className="ml-8 flex items-center">
             <div className="flex items-center divide-x divide-gray-100 border-x border-gray-100">
               <span>
-                <a
-                  href="/account"
+                <Link
+                  to="/login"
                   className="block border-b-2 border-transparent p-6 hover:border-indigo-700"
                 >
                   <AccountIcon />
                   <span className="sr-only"> Account </span>
-                </a>
+                </Link>
               </span>
             </div>
           </div>
