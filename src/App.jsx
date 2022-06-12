@@ -14,7 +14,7 @@ function App() {
   const fetchJobs = async () => {
     try {
       const res = await getAllJobs();
-      setJobs(res.data);
+      setJobs(res.data.data);
     } catch (err) {
       console.log(err);
     }

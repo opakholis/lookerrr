@@ -1,7 +1,7 @@
 import { Job } from './job';
 
 export const JobsList = ({ jobs, search }) => {
-  const filteredJobs = jobs.data.filter(
+  const filteredJobs = jobs?.filter(
     (job) =>
       job.title.toLowerCase().includes(search.toLowerCase()) ||
       job.company_name.toLowerCase().includes(search.toLowerCase())
@@ -32,8 +32,9 @@ export const JobsList = ({ jobs, search }) => {
       id="jobs"
       className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
     >
-      {!jobs && Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} />)}
-      {jobs && renderJobs()}
+      {!jobs
+        ? Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} />)
+        : renderJobs()}
     </div>
   );
 };
