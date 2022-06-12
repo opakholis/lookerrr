@@ -1,6 +1,7 @@
-import { AccountIcon, MenuIcon } from './icons';
-import Logo from '../logo.svg';
 import { Link } from 'react-router-dom';
+import { MenuIcon, UserCircleIcon } from '@heroicons/react/outline';
+
+import Logo from '../logo.svg';
 
 const NavItem = [
   {
@@ -23,7 +24,7 @@ export const Header = () => {
       <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6 lg:px-12">
         <div className="flex items-center">
           <button type="button" className="p-2 sm:mr-4 md:hidden">
-            <MenuIcon />
+            <MenuIcon className="h-6 w-6 text-zinc-800" />
           </button>
 
           <a href="" className="hidden md:flex">
@@ -45,13 +46,13 @@ export const Header = () => {
           </nav>
 
           <div className="ml-8 flex items-center">
-            <div className="flex items-center divide-x divide-gray-100 border-x border-gray-100">
+            <div className="flex items-center">
               <span>
                 <Link
                   to="/login"
-                  className="block border-b-2 border-transparent p-6 hover:border-indigo-700"
+                  className="block border-b-2 border-transparent py-6 px-2 hover:border-indigo-700"
                 >
-                  <AccountIcon />
+                  <UserCircleIcon className="h-6 w-6 text-zinc-500" />
                   <span className="sr-only"> Account </span>
                 </Link>
               </span>

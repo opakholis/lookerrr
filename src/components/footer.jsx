@@ -1,4 +1,4 @@
-import { ChevronUpIcon } from './icons';
+import { ChevronUpIcon } from '@heroicons/react/solid';
 import Logo from '../logo.svg';
 
 export const Footer = () => {
@@ -8,10 +8,10 @@ export const Footer = () => {
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8">
           <a
             className="inline-block rounded-full bg-indigo-600 p-2 text-white shadow transition hover:bg-indigo-500 sm:p-3 lg:p-4"
-            href="#MainContent"
+            href="#root"
           >
             <span className="sr-only">Back to top</span>
-            <ChevronUpIcon />
+            <ChevronUpIcon className="h-6 w-6 text-white" />
           </a>
         </div>
 

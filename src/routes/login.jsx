@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie';
-import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { EyeOffIcon, AtSymbolIcon, EyeIcon } from '@heroicons/react/outline';
 
-import { EyeIcon, EyeOffIcon, AtSymbolIcon } from '../components/icons';
 import { login } from '../api';
 
 import Logo from '../logo.svg';
@@ -64,7 +64,7 @@ export const Login = () => {
               />
 
               <span className="absolute inset-y-0 right-4 inline-flex items-center">
-                <AtSymbolIcon />
+                <AtSymbolIcon className="h-5 w-5 text-zinc-400" />
               </span>
             </div>
           </div>
@@ -93,7 +93,11 @@ export const Login = () => {
                   setInput({ ...input, showPassword: !input.showPassword });
                 }}
               >
-                {input.showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                {input.showPassword ? (
+                  <EyeOffIcon className="h-5 w-5 text-zinc-400" />
+                ) : (
+                  <EyeIcon className="h-5 w-5 text-zinc-400" />
+                )}
               </button>
             </div>
           </div>

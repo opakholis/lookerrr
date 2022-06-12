@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@heroicons/react': ^1.0.6
   '@tailwindcss/forms': ^0.5.2
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
@@ -19,6 +20,7 @@ specifiers:
   vite: ^2.9.9
 
 dependencies:
+  '@heroicons/react': 1.0.6_react@18.1.0
   axios: 0.27.2
   js-cookie: 3.0.1
   react: 18.1.0
@@ -307,6 +309,14 @@ packages:
       '@babel/helper-validator-identifier': 7.16.7
       to-fast-properties: 2.0.0
     dev: true
+
+  /@heroicons/react/1.0.6_react@18.1.0:
+    resolution: {integrity: sha512-JJCXydOFWMDpCP4q13iEplA503MQO3xLoZiKum+955ZCtHINWnx26CUxVxxFQu/uLb4LW3ge15ZpzIkXKkJ8oQ==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 18.1.0
+    dev: false
 
   /@jridgewell/gen-mapping/0.1.1:
     resolution: {integrity: sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w==}
