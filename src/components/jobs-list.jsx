@@ -1,34 +1,39 @@
-import { useEffect, useState } from 'react';
-
 import { Job } from './job';
-import { getAllJobs } from '../api';
 
-export const JobsList = () => {
-  const [jobs, setJobs] = useState(null);
+export const JobsList = ({ jobs, search }) => {
+  const filteredJobs = jobs.data.filter(
+    (job) =>
+      job.title.toLowerCase().includes(search.toLowerCase()) ||
+      job.company_name.toLowerCase().includes(search.toLowerCase())
+  );
 
-  const fetchJobs = async () => {
-    try {
-      const res = await getAllJobs();
-      setJobs(res.data);
-    } catch (err) {
-      console.log(err);
+  const renderJobs = () => {
+    if (filteredJobs.length < 3) {
+      return (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {filteredJobs.map((job) => (
+            <Job data={job} key={job.id} />
+          ))}
+        </div>
+      );
+    } else {
+      return (
+        <div className="md:masonry-2-col lg:masonry-3-col">
+          {filteredJobs.map((job) => (
+            <Job data={job} key={job.id} />
+          ))}
+        </div>
+      );
     }
   };
-
-  useEffect(() => {
-    fetchJobs();
-  }, [jobs]);
 
   return (
     <div
       id="jobs"
       className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
     >
-      <div className="md:masonry-2-col lg:masonry-3-col">
-        {!jobs
-          ? Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} />)
-          : jobs.data.map((job) => <Job key={job.id} data={job} />)}
-      </div>
+      {!jobs && Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} />)}
+      {jobs && renderJobs()}
     </div>
   );
 };
