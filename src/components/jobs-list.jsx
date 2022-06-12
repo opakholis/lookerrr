@@ -32,9 +32,15 @@ export const JobsList = ({ jobs, search }) => {
       id="jobs"
       className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
     >
-      {!jobs
-        ? Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} />)
-        : renderJobs()}
+      {!jobs ? (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Skeleton key={i} />
+          ))}
+        </div>
+      ) : (
+        renderJobs()
+      )}
     </div>
   );
 };
