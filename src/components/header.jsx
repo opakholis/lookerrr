@@ -1,4 +1,4 @@
-import { AccountIcon, SearchIcon } from './icons';
+import { AccountIcon } from './icons';
 import Logo from '../logo.svg';
 
 const NavItem = [
@@ -16,7 +16,7 @@ const NavItem = [
   }
 ];
 
-export const Navigation = () => {
+export const Header = () => {
   return (
     <header className="border-b border-gray-100">
       <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6 lg:px-12">
