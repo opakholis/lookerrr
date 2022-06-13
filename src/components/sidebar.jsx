@@ -14,7 +14,7 @@ const CustomLink = ({ children, to, className }) => {
     <Link
       to={to}
       className={clsx(
-        'flex items-center rounded-lg px-4 py-3 text-zinc-500',
+        'flex items-center rounded-lg p-2.5 text-zinc-500 md:px-4 md:py-3',
         match && 'bg-zinc-100',
         className
       )}
@@ -32,13 +32,15 @@ export const Sidebar = () => {
           className: 'h-6 w-6 text-zinc-400',
           'aria-hidden': 'true'
         })}
-        <span className="ml-3 text-sm font-medium">{item.name}</span>
+        <span className="hidden text-sm font-medium md:ml-3 md:block">
+          {item.name}
+        </span>
       </>
     );
   };
 
   return (
-    <div className="flex h-screen w-64 flex-col justify-between border-r bg-white">
+    <div className="flex h-screen w-20 flex-col justify-between border-r bg-white md:w-64">
       <div className="px-4 pb-6">
         <img src={Logo} alt="logo" className="h-16 w-auto" />
         <nav className="mt-6 flex flex-col space-y-2">
@@ -52,7 +54,7 @@ export const Sidebar = () => {
                       <ChevronDownIcon className="h-4 w-4 text-gray-500" />
                     </span>
                   </summary>
-                  <nav className="mt-1.5 ml-8 flex flex-col">
+                  <nav className="mt-1.5 flex flex-col md:ml-8">
                     {item.children.map((child) => (
                       <CustomLink to={child.href} key={child.name}>
                         {renderItem(child)}
@@ -83,7 +85,7 @@ export const Sidebar = () => {
             alt="Simon Lewis"
           />
 
-          <div className="ml-1.5">
+          <div className="hidden md:ml-1.5 md:block">
             <p className="text-xs">
               <strong className="block font-medium">Simon Lewis</strong>
 
