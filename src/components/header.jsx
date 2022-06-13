@@ -2,21 +2,7 @@ import { Link } from 'react-router-dom';
 import { MenuIcon, UserCircleIcon } from '@heroicons/react/outline';
 
 import Logo from '../logo.svg';
-
-const NavItem = [
-  {
-    name: 'Jobs',
-    path: '#jobs'
-  },
-  {
-    name: 'Companies',
-    path: '#companies'
-  },
-  {
-    name: 'About',
-    path: '#about'
-  }
-];
+import { NavMenu } from '../lib/navigation-data';
 
 export const Header = () => {
   return (
@@ -34,10 +20,10 @@ export const Header = () => {
 
         <div className="flex flex-1 items-center justify-end">
           <nav className="hidden md:flex md:space-x-10 md:text-xs md:font-bold md:uppercase md:tracking-wide md:text-gray-500">
-            {NavItem.map(({ name, path }) => (
+            {NavMenu.map(({ name, href }) => (
               <a
-                key={path}
-                href={path}
+                key={href}
+                href={href}
                 className="block h-16 border-b-2 border-transparent leading-[4rem] hover:border-current hover:text-indigo-700"
               >
                 {name}

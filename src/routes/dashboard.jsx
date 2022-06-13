@@ -1,7 +1,3 @@
 export const Dashboard = () => {
-  return (
-    <div>
-      <p>p</p>
-    </div>
-  );
+  return <div className="mx-auto h-full w-11/12">Dashboard</div>;
 };
