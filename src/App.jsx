@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { Home } from './routes/home';
+import { DetailJob } from './routes/detail-job';
 import { Login } from './routes/login';
 import { Dashboard } from './routes/dashboard';
 import { NotFound } from './routes/not-found';
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout.Default />}>
         <Route index element={<Home />} />
+        <Route path="/jobs/:id" element={<DetailJob />} />
       </Route>
       <Route path="login" element={<Login />} />
       {/* <Route path="register" element={<Register />} /> */}
