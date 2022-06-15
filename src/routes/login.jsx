@@ -9,23 +9,38 @@ import Logo from '../logo.svg';
 
 export const Login = () => {
   const navigate = useNavigate();
+
   const [input, setInput] = useState({
     email: '',
-    password: '',
-    showPassword: false
+    password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  // visible password
+  const handlePasswordVisibility = (e) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const { email, password } = input;
-
       const res = await login({ email, password });
+
+      // set token in cookie
       const { token } = res.data;
       Cookies.set('token', token);
+
+      // redirect to dashboard
       navigate('/dashboard', { replace: true });
     } catch (err) {
       console.log(err);
+      setInput({ ...input, email: '', password: '' });
     }
   };
 
@@ -33,6 +48,10 @@ export const Login = () => {
     const token = Cookies.get('token');
     if (token) navigate('/dashboard', { replace: true });
   });
+
+  useEffect(() => {
+    document.title = 'Login';
+  }, []);
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -57,8 +76,9 @@ export const Login = () => {
               <input
                 id="email"
                 type="email"
+                name="email"
                 value={input.email}
-                onChange={(e) => setInput({ ...input, email: e.target.value })}
+                onChange={handleChange}
                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                 placeholder="Masukkan email"
               />
@@ -77,23 +97,19 @@ export const Login = () => {
             <div className="relative mt-1">
               <input
                 id="password"
-                type={input.showPassword ? 'text' : 'password'}
+                type={showPassword ? 'text' : 'password'}
+                name="password"
                 value={input.password}
-                onChange={(e) =>
-                  setInput({ ...input, password: e.target.value })
-                }
+                onChange={handleChange}
                 className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
                 placeholder="Masukkan password"
               />
 
               <button
                 className="absolute inset-y-0 right-4 inline-flex items-center"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setInput({ ...input, showPassword: !input.showPassword });
-                }}
+                onClick={handlePasswordVisibility}
               >
-                {input.showPassword ? (
+                {showPassword ? (
                   <EyeOffIcon className="h-5 w-5 text-zinc-400" />
                 ) : (
                   <EyeIcon className="h-5 w-5 text-zinc-400" />
