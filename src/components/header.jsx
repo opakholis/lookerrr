@@ -13,9 +13,9 @@ export const Header = () => {
             <MenuIcon className="h-6 w-6 text-zinc-800" />
           </button>
 
-          <a href="" className="hidden md:flex">
+          <Link to="/" className="hidden md:flex">
             <img src={Logo} alt="logo" className="h-16 w-auto" />
-          </a>
+          </Link>
         </div>
 
         <div className="flex flex-1 items-center justify-end">
