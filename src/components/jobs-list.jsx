@@ -16,21 +16,21 @@ export const JobsList = ({ jobs, search }) => {
           ))}
         </div>
       );
-    } else {
-      return (
-        <div className="md:masonry-2-col lg:masonry-3-col">
-          {filteredJobs.map((job) => (
-            <Job data={job} key={job.id} />
-          ))}
-        </div>
-      );
     }
+
+    return (
+      <div className="gap-6 space-y-6 pb-28 md:columns-2 lg:columns-3">
+        {filteredJobs.map((job) => (
+          <Job data={job} key={job.id} />
+        ))}
+      </div>
+    );
   };
 
   return (
     <div
       id="jobs"
-      className="mx-auto mb-12 mt-28 w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
+      className="mx-auto mb-12 mt-28 h-full w-full max-w-screen-lg scroll-mt-32 px-6 md:px-12"
     >
       {!jobs ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
