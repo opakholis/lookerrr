@@ -1,8 +1,6 @@
 import client from './request';
 
-const getAllJobs = () => {
-  return client.get('/job-vacancy');
-};
+const getAllJobs = () => client.get('/job-vacancy');
 
 const getJobById = (id) => client.get(`/job-vacancy/${id}`);
 
