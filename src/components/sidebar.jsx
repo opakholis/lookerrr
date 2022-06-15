@@ -14,7 +14,7 @@ const CustomLink = ({ children, to, className }) => {
     <Link
       to={to}
       className={clsx(
-        'flex items-center rounded-lg p-2.5 text-zinc-500 md:px-4 md:py-3',
+        'flex items-center rounded-lg p-2.5 text-zinc-500 hover:bg-zinc-100 md:px-4 md:py-3',
         match && 'bg-zinc-100',
         className
       )}
