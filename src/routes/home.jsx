@@ -2,10 +2,8 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Header } from '../components/header';
 import { JobsList } from '../components/jobs-list';
 import { Hero } from '../components/hero';
-import { Footer } from '../components/footer';
 
 import { getAllJobs } from '../api';
 
@@ -34,10 +32,8 @@ export const Home = () => {
 
   return (
     <>
-      <Header />
       <Hero inputValue={searchValue} setInputValue={setSearchValue} />
       <JobsList jobs={jobs} search={searchValue} />
-      <Footer />
     </>
   );
 };
