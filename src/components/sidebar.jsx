@@ -1,6 +1,7 @@
 import { createElement } from 'react';
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { ChevronDownIcon } from '@heroicons/react/outline';
+import Cookies from 'js-cookie';
 import clsx from 'clsx';
 import Logo from '../logo.svg';
 
@@ -15,7 +16,7 @@ const CustomLink = ({ children, to, className }) => {
       to={to}
       className={clsx(
         'flex items-center rounded-lg p-2.5 text-zinc-500 hover:bg-zinc-100 md:px-4 md:py-3',
-        match && 'bg-zinc-100',
+        match && 'bg-zinc-100 text-zinc-700',
         className
       )}
     >
@@ -25,6 +26,8 @@ const CustomLink = ({ children, to, className }) => {
 };
 
 export const Sidebar = () => {
+  const navigate = useNavigate();
+
   const renderItem = (item) => {
     return (
       <>
@@ -37,6 +40,11 @@ export const Sidebar = () => {
         </span>
       </>
     );
+  };
+
+  const handleLogout = () => {
+    Cookies.remove('token');
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -55,11 +63,25 @@ export const Sidebar = () => {
                     </span>
                   </summary>
                   <nav className="mt-1.5 flex flex-col md:ml-8">
-                    {item.children.map((child) => (
-                      <CustomLink to={child.href} key={child.name}>
-                        {renderItem(child)}
-                      </CustomLink>
-                    ))}
+                    {item.children.map((child) => {
+                      if (child.name === 'Logout') {
+                        return (
+                          <button
+                            key={child.name}
+                            onClick={handleLogout}
+                            className="flex items-center rounded-lg p-2.5 text-zinc-500 hover:bg-zinc-100 md:px-4 md:py-3"
+                          >
+                            {renderItem(child)}
+                          </button>
+                        );
+                      } else {
+                        return (
+                          <CustomLink to={child.href} key={child.name}>
+                            {renderItem(child)}
+                          </CustomLink>
+                        );
+                      }
+                    })}
                   </nav>
                 </details>
               );
