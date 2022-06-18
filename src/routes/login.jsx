@@ -38,6 +38,7 @@ export const Login = () => {
         .then((res) => {
           setUser(res.data.user);
           Cookies.set('token', res.data.token);
+          localStorage.setItem('user', JSON.stringify(res.data.user));
         })
         .then(() => {
           // redirect to dashboard

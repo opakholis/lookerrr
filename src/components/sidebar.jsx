@@ -48,7 +48,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className="flex h-screen w-20 flex-col justify-between border-r bg-white md:w-64">
+    <div className="flex h-screen w-20 flex-col justify-between overflow-y-auto border-r bg-white md:w-64">
       <div className="px-4 pb-6">
         <img src={Logo} alt="logo" className="h-16 w-auto" />
         <nav className="mt-6 flex flex-col space-y-2">
@@ -93,28 +93,6 @@ export const Sidebar = () => {
             );
           })}
         </nav>
-      </div>
-
-      {/* bottom of sidebar */}
-      <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <a
-          href=""
-          className="flex shrink-0 items-center bg-white p-4 hover:bg-gray-50"
-        >
-          <img
-            className="h-10 w-10 rounded-full object-cover"
-            src="https://www.hyperui.dev/photos/man-4.jpeg"
-            alt="Simon Lewis"
-          />
-
-          <div className="hidden md:ml-1.5 md:block">
-            <p className="text-xs">
-              <strong className="block font-medium">Simon Lewis</strong>
-
-              <span> simonlewis@fakemail.com </span>
-            </p>
-          </div>
-        </a>
       </div>
     </div>
   );

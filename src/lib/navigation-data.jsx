@@ -8,7 +8,7 @@ import {
   UserIcon
 } from '@heroicons/react/outline';
 
-const SidebarMenu = [
+export const SidebarMenu = [
   {
     name: 'Dashboard',
     href: '/dashboard',
@@ -47,20 +47,3 @@ const SidebarMenu = [
     ]
   }
 ];
-
-const NavMenu = [
-  {
-    name: 'Jobs',
-    href: '#jobs'
-  },
-  {
-    name: 'Companies',
-    href: '#companies'
-  },
-  {
-    name: 'About',
-    href: '#about'
-  }
-];
-
-export { SidebarMenu, NavMenu };

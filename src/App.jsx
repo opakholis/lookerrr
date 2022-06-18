@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Home } from './routes/home';
@@ -11,8 +12,17 @@ import { NotFound } from './routes/not-found';
 import { Register } from './routes/register';
 
 import { Layout } from './layouts';
+import AuthContext from './context/auth';
 
 function App() {
+  const { user, setUser } = useContext(AuthContext);
+  console.log(user);
+
+  useEffect(() => {
+    const data = localStorage.getItem('user');
+    if (data) setUser(JSON.parse(data));
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<Layout.Default />}>
