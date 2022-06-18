@@ -7,4 +7,18 @@ const getJobById = (id) => client.get(`/job-vacancy/${id}`);
 const login = ({ email, password }) =>
   client.post('/login', { email, password });
 
-export { getAllJobs, getJobById, login };
+const changePassword = (oldPassword, newPassword, token) =>
+  client.post(
+    '/change-password',
+    {
+      current_password: oldPassword,
+      new_password: newPassword
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+export { getAllJobs, getJobById, login, changePassword };
