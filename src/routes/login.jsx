@@ -1,14 +1,16 @@
 import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeOffIcon, AtSymbolIcon, EyeIcon } from '@heroicons/react/outline';
 
+import AuthContext from '../context/auth';
 import { user } from '../api';
 
 import Logo from '../logo.svg';
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
 
   const [input, setInput] = useState({
     email: '',
@@ -34,7 +36,7 @@ export const Login = () => {
       await user
         .login({ email, password })
         .then((res) => {
-          console.log(res);
+          setUser(res.data.user);
           Cookies.set('token', res.data.token);
         })
         .then(() => {
