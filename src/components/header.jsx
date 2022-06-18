@@ -1,23 +1,29 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useMatch } from 'react-router-dom';
+
 import AuthContext from '../context/auth';
 
 import Logo from '../logo.svg';
 
 export const Header = () => {
   const { user } = useContext(AuthContext);
+  const match = useMatch({ path: '/dashboard/*' });
+
+  const renderLogo = () => {
+    if (!user || !match) {
+      return (
+        <Link to="/">
+          <img src={Logo} alt="logo" className="h-16 w-auto" />
+        </Link>
+      );
+    }
+  };
 
   console.log(user);
   return (
     <header className="border-b border-gray-100">
-      <div className="mx-auto flex h-16 max-w-screen-2xl items-center justify-between px-6 lg:px-12">
-        <div className="flex items-center">
-          {!user && (
-            <Link to="/" className="flex">
-              <img src={Logo} alt="logo" className="h-16 w-auto" />
-            </Link>
-          )}
-        </div>
+      <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between px-6 lg:px-12">
+        <div className="flex items-center">{renderLogo()}</div>
 
         <div className="flex items-center">
           {!user ? (
@@ -28,11 +34,14 @@ export const Header = () => {
               Login
             </Link>
           ) : (
-            <div className="flex items-center md:space-x-2.5">
+            <Link
+              to="/dashboard"
+              className="my-2.5 flex items-center rounded-xl py-2.5 pl-2.5 pr-4 hover:bg-zinc-100 md:space-x-2.5"
+            >
               <img
                 src={user.image_url}
                 alt={user.name}
-                className="h-12 w-12 rounded-full object-cover"
+                className="h-11 w-11 rounded-full object-cover"
               />
               <div className="hidden md:block">
                 <h3 className="text-sm font-medium text-zinc-800">
@@ -40,7 +49,7 @@ export const Header = () => {
                 </h3>
                 <p className="text-xs text-gray-600">{user.email}</p>
               </div>
-            </div>
+            </Link>
           )}
         </div>
       </div>

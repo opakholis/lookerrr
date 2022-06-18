@@ -7,9 +7,9 @@ export const DashboardLayout = () => {
   return (
     <div className="mx-auto flex h-screen w-full max-w-screen-2xl">
       <Sidebar />
-      <div className="h-full flex-grow">
+      <div className="flex flex-1 flex-col overflow-hidden">
         <Header />
-        <main className="overflow-y-auto">
+        <main className="overflow-y-scroll">
           <Outlet />
         </main>
       </div>

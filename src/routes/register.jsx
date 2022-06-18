@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   EyeOffIcon,
@@ -9,11 +9,13 @@ import {
   DeviceMobileIcon
 } from '@heroicons/react/outline';
 
-import { user } from '../api';
+import { user as userApi } from '../api';
 
 import Logo from '../logo.svg';
+import AuthContext from '../context/auth';
 
 export const Register = () => {
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
@@ -45,7 +47,7 @@ export const Register = () => {
         password
       };
 
-      await user.register(body).then(() => {
+      await userApi.register(body).then(() => {
         // redirect to login
         navigate('/login', { replace: true });
       });
@@ -56,8 +58,7 @@ export const Register = () => {
   };
 
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) navigate('/dashboard', { replace: true });
+    if (user) navigate('/dashboard', { replace: true });
   });
 
   useEffect(() => {

@@ -1,6 +1,4 @@
-import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { JobsList } from '../components/jobs-list';
 import { Hero } from '../components/hero';
@@ -8,7 +6,6 @@ import { Hero } from '../components/hero';
 import { job } from '../api';
 
 export const Home = () => {
-  const navigate = useNavigate();
   const [jobs, setJobs] = useState(null);
   const [searchValue, setSearchValue] = useState('');
 
@@ -25,11 +22,6 @@ export const Home = () => {
   useEffect(() => {
     fetchJobs();
   }, []);
-
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) navigate('/dashboard', { replace: true });
-  });
 
   return (
     <>

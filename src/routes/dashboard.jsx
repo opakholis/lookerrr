@@ -1,18 +1,19 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useContext, useEffect } from 'react';
+
+import AuthContext from '../context/auth';
 
 export const Dashboard = () => {
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     document.title = 'Dashboard';
   }, []);
 
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (!token) navigate('/login');
-  }, []);
-
-  return <div className="mx-auto h-full w-11/12">Dashboard</div>;
+  return (
+    <div className="mx-auto h-full w-full p-6 md:p-8">
+      <h1 className="text-lg font-medium text-zinc-800">
+        Holaa, {user.name}! <span aria-hidden>👋</span>
+      </h1>
+    </div>
+  );
 };

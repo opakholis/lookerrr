@@ -4,13 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EyeOffIcon, AtSymbolIcon, EyeIcon } from '@heroicons/react/outline';
 
 import AuthContext from '../context/auth';
-import { user } from '../api';
+import { user as userApi } from '../api';
 
 import Logo from '../logo.svg';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const [input, setInput] = useState({
     email: '',
@@ -33,7 +33,7 @@ export const Login = () => {
 
     try {
       const { email, password } = input;
-      await user
+      await userApi
         .login({ email, password })
         .then((res) => {
           setUser(res.data.user);
@@ -51,8 +51,7 @@ export const Login = () => {
   };
 
   useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) navigate('/dashboard', { replace: true });
+    if (user) navigate('/dashboard', { replace: true });
   });
 
   useEffect(() => {
