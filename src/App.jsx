@@ -8,7 +8,7 @@ import { Dashboard } from './routes/dashboard';
 import { Security } from './routes/security';
 
 import { NotFound } from './routes/not-found';
-// import { Register } from './routes/register';
+import { Register } from './routes/register';
 
 import { Layout } from './layouts';
 
@@ -20,7 +20,7 @@ function App() {
         <Route path="/jobs/:id" element={<DetailJob />} />
       </Route>
       <Route path="login" element={<Login />} />
-      {/* <Route path="register" element={<Register />} /> */}
+      <Route path="register" element={<Register />} />
       <Route path="dashboard" element={<Layout.Dashboard />}>
         <Route index element={<Dashboard />} />
         <Route path="/dashboard/account/security" element={<Security />} />
