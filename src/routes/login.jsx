@@ -26,18 +26,18 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     try {
       const { email, password } = input;
-      const res = await login({ email, password });
-
-      // set token in cookie
-      const { token } = res.data;
-      Cookies.set('token', token);
-
-      // redirect to dashboard
-      navigate('/dashboard', { replace: true });
+      login({ email, password })
+        .then((res) => {
+          Cookies.set('token', res.data.token);
+        })
+        .then(() => {
+          // redirect to dashboard
+          navigate('/dashboard', { replace: true });
+        });
     } catch (err) {
       console.log(err);
       setInput({ ...input, email: '', password: '' });
