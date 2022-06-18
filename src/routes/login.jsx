@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EyeOffIcon, AtSymbolIcon, EyeIcon } from '@heroicons/react/outline';
 
-import { login } from '../api';
+import { user } from '../api';
 
 import Logo from '../logo.svg';
 
@@ -26,12 +26,15 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
       const { email, password } = input;
-      login({ email, password })
+      await user
+        .login({ email, password })
         .then((res) => {
+          console.log(res);
           Cookies.set('token', res.data.token);
         })
         .then(() => {
@@ -39,8 +42,8 @@ export const Login = () => {
           navigate('/dashboard', { replace: true });
         });
     } catch (err) {
-      console.log(err);
-      setInput({ ...input, email: '', password: '' });
+      console.log(err.response?.data);
+      setInput({ email: '', password: '' });
     }
   };
 

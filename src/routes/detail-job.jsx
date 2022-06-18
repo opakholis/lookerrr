@@ -5,7 +5,7 @@ import { BriefcaseIcon, CashIcon } from '@heroicons/react/outline';
 import { Breadcrumb } from '../components/breadcrumb';
 import { toPrice } from '../utils/toPrice';
 
-import { getJobById } from '../api';
+import { job as currentJob } from '../api';
 
 export const DetailJob = () => {
   const { id } = useParams();
@@ -13,10 +13,11 @@ export const DetailJob = () => {
 
   const fetchJob = async () => {
     try {
-      const res = await getJobById(id);
-      setJob(res.data);
+      await currentJob.detail(id).then((res) => {
+        setJob(res.data);
+      });
     } catch (err) {
-      console.log(err);
+      console.log(err.response?.data);
     }
   };
 

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { JobsList } from '../components/jobs-list';
 import { Hero } from '../components/hero';
 
-import { getAllJobs } from '../api';
+import { job } from '../api';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -14,10 +14,11 @@ export const Home = () => {
 
   const fetchJobs = async () => {
     try {
-      const res = await getAllJobs();
-      setJobs(res.data.data);
+      await job.all().then((res) => {
+        setJobs(res.data.data);
+      });
     } catch (err) {
-      console.log(err);
+      console.log(err.response?.data);
     }
   };
 

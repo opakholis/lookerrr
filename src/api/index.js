@@ -1,24 +1,19 @@
 import client from './request';
 
-const getAllJobs = () => client.get('/job-vacancy');
-
-const getJobById = (id) => client.get(`/job-vacancy/${id}`);
-
-const login = ({ email, password }) =>
-  client.post('/login', { email, password });
-
-const changePassword = (oldPassword, newPassword, token) =>
-  client.post(
-    '/change-password',
-    {
-      current_password: oldPassword,
-      new_password: newPassword
-    },
-    {
+const user = {
+  login: (credentials) => client.post('/login', credentials),
+  register: (payload) => client.post('/register', payload),
+  change_password: (payload) =>
+    client.post('/change-password', payload, {
       headers: {
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${payload.token}`
       }
-    }
-  );
+    })
+};
 
-export { getAllJobs, getJobById, login, changePassword };
+const job = {
+  all: () => client.get('/job-vacancy'),
+  detail: (id) => client.get(`/job-vacancy/${id}`)
+};
+
+export { job, user };

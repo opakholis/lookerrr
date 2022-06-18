@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import { changePassword } from '../api';
+import { user } from '../api';
 
 export const Security = () => {
   const navigate = useNavigate();
@@ -28,10 +27,16 @@ export const Security = () => {
       const { oldPassword, newPassword, confirmPassword } = password;
       const token = Cookies.get('token');
 
+      const body = {
+        current_password: oldPassword,
+        new_password: newPassword
+      };
+
       if (newPassword !== confirmPassword) {
         console.log('Passwords do not match');
       } else {
-        await changePassword(oldPassword, newPassword, token).then((res) => {
+        await user.change_password({ ...body, token }).then((res) => {
+          console.log(res);
           setPassword({
             oldPassword: '',
             newPassword: '',
