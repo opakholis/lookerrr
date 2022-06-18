@@ -35,14 +35,12 @@ export const Security = () => {
       if (newPassword !== confirmPassword) {
         console.log('Passwords do not match');
       } else {
-        await user.change_password({ ...body, token }).then((res) => {
-          console.log(res);
+        await user.change_password({ ...body, token }).then(() => {
           setPassword({
             oldPassword: '',
             newPassword: '',
             confirmPassword: ''
           });
-          console.log(res.data);
         });
       }
     } catch (err) {

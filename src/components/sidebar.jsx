@@ -42,7 +42,9 @@ export const Sidebar = () => {
     );
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('user');
     Cookies.remove('token');
     navigate('/login', { replace: true });
   };

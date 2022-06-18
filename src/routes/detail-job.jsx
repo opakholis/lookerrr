@@ -9,11 +9,11 @@ import { job as currentJob } from '../api';
 
 export const DetailJob = () => {
   const { id } = useParams();
-  const [job, setJob] = useState(null);
+  const [job, setJob] = useState({});
 
-  const fetchJob = async () => {
+  const fetchJob = () => {
     try {
-      await currentJob.detail(id).then((res) => {
+      currentJob.detail(id).then((res) => {
         setJob(res.data);
       });
     } catch (err) {

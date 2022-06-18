@@ -16,8 +16,7 @@ import { Layout } from './layouts';
 import AuthContext from './context/auth';
 
 function App() {
-  const { user, setUser } = useContext(AuthContext);
-  console.log(user);
+  const { setUser } = useContext(AuthContext);
 
   useEffect(() => {
     const data = localStorage.getItem('user');

@@ -19,7 +19,6 @@ export const Header = () => {
     }
   };
 
-  console.log(user);
   return (
     <header className="border-b border-gray-100">
       <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between px-6 lg:px-12">
