@@ -64,7 +64,7 @@ export const Sidebar = () => {
                       <ChevronDownIcon className="h-4 w-4 text-gray-500" />
                     </span>
                   </summary>
-                  <nav className="mt-1.5 flex flex-col md:ml-8">
+                  <nav className="mt-1.5 flex flex-col space-y-2 md:ml-8">
                     {item.children.map((child) => {
                       if (child.name === 'Logout') {
                         return (
