@@ -64,8 +64,7 @@ export const Security = () => {
 
   return (
     <div className="mx-auto h-full w-11/12">
-      <h2>Keamanan</h2>
-      <form className="w-full max-w-xs" onSubmit={handleChangePassword}>
+      <form className="w-full max-w-sm" onSubmit={handleChangePassword}>
         <div className="mb-6 mt-8">
           <label htmlFor="oldPassword" className="text-sm font-medium">
             Password Lama
