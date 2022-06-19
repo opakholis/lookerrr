@@ -8,6 +8,7 @@ import { Login } from './routes/login';
 
 import { Dashboard } from './routes/dashboard';
 import { Security } from './routes/security';
+import { TableJob } from './routes/table-job';
 
 import { ProtectedRoute } from './lib/protected-route';
 import { NotFound } from './routes/not-found';
@@ -40,6 +41,7 @@ function App() {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="/dashboard/jobs" element={<TableJob />} />
         <Route path="/dashboard/account/security" element={<Security />} />
       </Route>
       <Route path="*" element={<NotFound />} />
