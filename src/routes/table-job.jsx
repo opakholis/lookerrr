@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import Cookies from 'js-cookie';
 
 import { job } from '../api';
 import { Datatable } from '../components/datatable';
@@ -31,6 +32,17 @@ export const TableJob = () => {
       console.log(err.response?.data);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      const cookie = Cookies.get('token');
+      await job.delete(id, cookie).then((res) => {
+        console.log(res.data);
+        fetchData();
+      });
+    } catch (err) {
+      console.log(err.response?.data);
+    }
+  };
 
   const columns = useMemo(
     () => [
@@ -56,10 +68,13 @@ export const TableJob = () => {
       },
       {
         Header: 'Action',
-        accessor: (originalRow, rowIndex) => (
+        accessor: (originalRow) => (
           <div className="flex items-center justify-around space-x-1.5">
-            <Button purpose="edit" onClick={() => console.log('edit')} />
-            <Button onClick={() => console.log('delete')} />
+            <Button
+              purpose="edit"
+              onClick={() => console.log(originalRow.id)}
+            />
+            <Button onClick={() => handleDelete(originalRow.id)} />
           </div>
         )
       }
