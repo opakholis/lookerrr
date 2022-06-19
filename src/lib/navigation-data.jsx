@@ -26,12 +26,11 @@ export const SidebarMenu = [
   },
   {
     name: 'Akun',
-    href: '/dashboard/account',
     icon: UserIcon,
     children: [
       {
         name: 'Detail',
-        href: '/dashboard/account/detail',
+        href: '/dashboard/account',
         icon: IdentificationIcon
       },
       {

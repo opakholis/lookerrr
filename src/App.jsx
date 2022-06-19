@@ -7,8 +7,9 @@ import { Register } from './routes/register';
 import { Login } from './routes/login';
 
 import { Dashboard } from './routes/dashboard';
-import { Security } from './routes/security';
 import { TableJob } from './routes/table-job';
+import { Security } from './routes/security';
+import { Profile } from './routes/profile';
 
 import { ProtectedRoute } from './lib/protected-route';
 import { NotFound } from './routes/not-found';
@@ -42,6 +43,7 @@ function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="/dashboard/jobs" element={<TableJob />} />
+        <Route path="/dashboard/account" element={<Profile />} />
         <Route path="/dashboard/account/security" element={<Security />} />
       </Route>
       <Route path="*" element={<NotFound />} />
