@@ -210,12 +210,12 @@ export const FormJob = () => {
           </div>
         </div>
 
-        <submit
+        <button
           type="submit"
           className="mt-8 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
         >
           Submit
-        </submit>
+        </button>
       </form>
     </div>
   );
