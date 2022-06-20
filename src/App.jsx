@@ -8,6 +8,7 @@ import { Login } from './routes/login';
 
 import { Dashboard } from './routes/dashboard';
 import { TableJob } from './routes/table-job';
+import { FormJob } from './routes/form-job';
 import { Security } from './routes/security';
 import { Profile } from './routes/profile';
 
@@ -43,6 +44,7 @@ function App() {
       >
         <Route index element={<Dashboard />} />
         <Route path="/dashboard/jobs" element={<TableJob />} />
+        <Route path="/dashboard/form" element={<FormJob />} />
         <Route path="/dashboard/account" element={<Profile />} />
         <Route path="/dashboard/account/security" element={<Security />} />
       </Route>
