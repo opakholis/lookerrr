@@ -5,7 +5,11 @@ import { useForm } from 'react-hook-form';
 import { job } from '../api';
 
 export const FormJob = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      job_status: 0
+    }
+  });
 
   const onSubmit = (data) => {
     try {
@@ -210,9 +214,6 @@ export const FormJob = () => {
               name="job_status"
               className="h-5 w-5 rounded"
               value={1}
-              onClick={(e) => {
-                console.log(e.target.value);
-              }}
               {...register('job_status')}
             />
             <span className="absolute inset-y-0 ml-2 inline-flex items-center rounded-md border border-blue-500 bg-blue-50 px-3 py-3 text-sm text-zinc-800">
