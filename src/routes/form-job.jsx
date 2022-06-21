@@ -1,7 +1,10 @@
-import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast, Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
+import { FormLabel, InputCheckbox, InputSelect, InputText } from '../ui/forms';
+import { JobTypeOption, JobTenureOption } from '../lib/jobs-option';
 import { job } from '../api';
 
 export const FormJob = () => {
@@ -15,11 +18,13 @@ export const FormJob = () => {
     try {
       const token = Cookies.get('token');
       const res = job.create(data, token).then(() => {
+        toast.success('Data berhasil ditambahkan');
         e.target.reset();
       });
       console.log(`response: ${res}`);
     } catch (err) {
       console.log(err.response?.data);
+      toast.error(err.response?.data?.message);
     }
   };
 
@@ -29,48 +34,31 @@ export const FormJob = () => {
 
   return (
     <div className="mx-auto h-full w-full p-6 md:p-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)} className="mb-8 space-y-4">
         <section className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <label htmlFor="title" className="mb-2 block text-sm font-medium">
-              Role
-            </label>
-            <input
+            <FormLabel htmlFor="title">Role</FormLabel>
+            <InputText
               id="title"
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="Front-end Developer"
               {...register('title', { required: true })}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="company_name"
-              className="mb-2 block text-sm font-medium"
-            >
-              Perusahaan
-            </label>
-            <input
+            <FormLabel htmlFor="company_name">Name Perusahaan</FormLabel>
+            <InputText
               id="company_name"
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="Google"
               {...register('company_name')}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="company_city"
-              className="mb-2 block text-sm font-medium"
-            >
-              Lokasi
-            </label>
-            <input
+            <FormLabel htmlFor="company_city">Lokasi</FormLabel>
+            <InputText
               id="company_city"
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="Jakarta"
               {...register('company_city')}
             />
@@ -78,48 +66,27 @@ export const FormJob = () => {
         </section>
 
         <div>
-          <label
-            htmlFor="company_logo"
-            className="mb-2 block text-sm font-medium"
-          >
-            Logo Instansi
-          </label>
-          <input
+          <FormLabel htmlFor="company_logo">Logo Perusahaan</FormLabel>
+          <InputText
             id="company_logo"
-            type="text"
-            className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
             placeholder="https://www.google.com/logo.png"
             {...register('company_image_url')}
           />
         </div>
 
         <div>
-          <label
-            htmlFor="job_description"
-            className="mb-2 block text-sm font-medium"
-          >
-            Deskripsi
-          </label>
-          <input
+          <FormLabel htmlFor="job_description">Deskripsi</FormLabel>
+          <InputText
             id="job_description"
-            type="text"
-            className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
             placeholder="Melakukan implementasi tampilan web"
             {...register('job_description')}
           />
         </div>
 
         <div>
-          <label
-            htmlFor="job_qualification"
-            className="mb-2 block text-sm font-medium"
-          >
-            Kualifikasi
-          </label>
-          <input
+          <FormLabel htmlFor="job_qualification">Kualifikasi</FormLabel>
+          <InputText
             id="job_qualification"
-            type="text"
-            className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
             placeholder="ReactJS, NodeJS, MongoDB"
             {...register('job_qualification')}
           />
@@ -127,73 +94,46 @@ export const FormJob = () => {
 
         <section className="grid gap-4 md:grid-cols-2">
           <div>
-            <label
-              htmlFor="job_type"
-              className="mb-2 block text-sm font-medium"
-            >
-              Penempatan
-            </label>
+            <FormLabel htmlFor="job_type">Penempatan</FormLabel>
             <select
               className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               id="job_type"
               {...register('job_type')}
             >
-              <option value="">--Pilih--</option>
-              <option value="on-site">On-site</option>
-              <option value="hybird">Hybird</option>
-              <option value="remote">Full Remote</option>
+              {JobTypeOption.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
           </div>
 
           <div>
-            <label
-              htmlFor="job_tenure"
-              className="mb-2 block text-sm font-medium"
-            >
-              Tipe Pekerjaan
-            </label>
-            <select
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
-              id="job_tenure"
-              {...register('job_tenure')}
-            >
-              <option value="">--Pilih--</option>
-              <option value="magang">Magang</option>
-              <option value="ful-ltime">Full-time</option>
-              <option value="part-time">Part-time</option>
-              <option value="kontrak">Kontrak</option>
-            </select>
+            <FormLabel htmlFor="job_tenure">Tipe Pekerjaan</FormLabel>
+            <InputSelect id="job_tenure" {...register('job_tenure')}>
+              {JobTenureOption.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </InputSelect>
           </div>
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
           <div>
-            <label
-              htmlFor="salary_min"
-              className="mb-2 block text-sm font-medium"
-            >
-              Salary Minimal
-            </label>
-            <input
+            <FormLabel htmlFor="salary_min">Salary Minimal</FormLabel>
+            <InputText
               id="salary_min"
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="8000000"
               {...register('salary_min', { required: true })}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="salary_max"
-              className="mb-2 block text-sm font-medium"
-            >
-              Salary Maksimal
-            </label>
-            <input
+            <FormLabel htmlFor="salary_max">Salary Maksimal</FormLabel>
+            <InputText
               id="salary_max"
-              type="text"
-              className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="13000000"
               {...register('salary_max', { required: true })}
             />
@@ -201,18 +141,10 @@ export const FormJob = () => {
         </section>
 
         <div className="pb-4">
-          <label
-            htmlFor="job_status"
-            className="mb-2 block text-sm font-medium"
-          >
-            Status Pekerjaan
-          </label>
+          <FormLabel htmlFor="job_status">Status Pekerjaan</FormLabel>
           <div className="relative">
-            <input
-              type="checkbox"
+            <InputCheckbox
               id="job_status"
-              name="job_status"
-              className="h-5 w-5 rounded"
               value={1}
               {...register('job_status')}
             />
