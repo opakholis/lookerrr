@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/outline';
+import { Toaster, toast } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
 import { job } from '../api';
@@ -35,12 +36,13 @@ export const TableJob = () => {
   const handleDelete = async (id) => {
     try {
       const cookie = Cookies.get('token');
-      await job.delete(id, cookie).then((res) => {
-        console.log(res.data);
+      await job.delete(id, cookie).then(() => {
+        toast.success('Data berhasil dihapus');
         fetchData();
       });
     } catch (err) {
       console.log(err.response?.data);
+      toast.error(err.response?.data?.message);
     }
   };
 
@@ -92,6 +94,7 @@ export const TableJob = () => {
 
   return (
     <div className="mx-auto mb-24 h-full w-full p-6 md:p-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <Datatable data={data} columns={columns} />
     </div>
   );
