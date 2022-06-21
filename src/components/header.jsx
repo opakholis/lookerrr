@@ -13,7 +13,7 @@ export const Header = () => {
     if (!user || !match) {
       return (
         <Link to="/">
-          <img src={Logo} alt="logo" className="h-16 w-auto" />
+          <img src={Logo} alt="logo" className="h-28 w-28" />
         </Link>
       );
     }

@@ -52,7 +52,9 @@ export const Sidebar = () => {
   return (
     <div className="flex h-screen w-20 flex-col justify-between overflow-y-auto border-r bg-white md:w-64">
       <div className="px-4 pb-6">
-        <img src={Logo} alt="logo" className="h-16 w-auto" />
+        <span className="flex justify-start">
+          <img src={Logo} alt="logo" className="h-16 w-28" />
+        </span>
         <nav className="mt-6 flex flex-col space-y-2">
           {SidebarMenu.map((item) => {
             if (item.children) {
