@@ -1,7 +1,12 @@
 import Cookies from 'js-cookie';
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { EyeOffIcon, AtSymbolIcon, EyeIcon } from '@heroicons/react/outline';
+import { useForm } from 'react-hook-form';
+import { toast, Toaster } from 'react-hot-toast';
+import { EyeOffIcon, EyeIcon } from '@heroicons/react/outline';
+
+import { ErorrMsg } from '../components/error-message';
+import { FormLabel, InputText } from '../ui/forms';
 
 import AuthContext from '../context/auth';
 import { user as userApi } from '../api';
@@ -10,17 +15,19 @@ import Logo from '../logo.svg';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
-
-  const [input, setInput] = useState({
-    email: '',
-    password: ''
+  const { setUser } = useContext(AuthContext);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   });
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+  const [showPassword, setShowPassword] = useState(false);
 
   // visible password
   const handlePasswordVisibility = (e) => {
@@ -28,13 +35,10 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async (data, e) => {
     try {
-      const { email, password } = input;
       await userApi
-        .login({ email, password })
+        .login(data)
         .then((res) => {
           setUser(res.data.user);
           Cookies.set('token', res.data.token);
@@ -45,14 +49,10 @@ export const Login = () => {
           navigate('/dashboard', { replace: true });
         });
     } catch (err) {
-      console.log(err.response?.data);
-      setInput({ email: '', password: '' });
+      e.target.reset();
+      toast.error('Email/Password tidak ditemukan!');
     }
   };
-
-  useEffect(() => {
-    if (user) navigate('/dashboard', { replace: true });
-  });
 
   useEffect(() => {
     document.title = 'Login';
@@ -60,6 +60,7 @@ export const Login = () => {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="mx-auto max-w-lg">
         <img src={Logo} alt="logo" className="mx-auto h-24 w-auto" />
 
@@ -69,58 +70,49 @@ export const Login = () => {
         </p>
 
         <form
-          onSubmit={handleLogin}
+          onSubmit={handleSubmit(onSubmit)}
           className="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl"
         >
           <div>
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="email"
-                type="email"
-                name="email"
-                value={input.email}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan email"
-              />
-
-              <span className="absolute inset-y-0 right-4 inline-flex items-center">
-                <AtSymbolIcon className="h-5 w-5 text-zinc-400" />
-              </span>
-            </div>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <InputText
+              id="email"
+              className="pr-12"
+              placeholder="Masukkan email"
+              {...register('email', {
+                required: 'Email tidak boleh kosong',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Format email tidak sesuai'
+                }
+              })}
+            />
+            {errors.email && <ErorrMsg msg={errors.email.message} />}
           </div>
 
           <div>
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                value={input.password}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan password"
-              />
-
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputText
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              className="pr-12"
+              placeholder="Masukkan password"
+              {...register('password', {
+                required: 'Password tidak boleh kosong'
+              })}
+            >
               <button
                 className="absolute inset-y-0 right-4 inline-flex items-center"
                 onClick={handlePasswordVisibility}
               >
                 {showPassword ? (
-                  <EyeOffIcon className="h-5 w-5 text-zinc-400" />
+                  <EyeOffIcon aria-hidden className="h-5 w-5 text-zinc-400" />
                 ) : (
-                  <EyeIcon className="h-5 w-5 text-zinc-400" />
+                  <EyeIcon aria-hidden className="h-5 w-5 text-zinc-400" />
                 )}
               </button>
-            </div>
+            </InputText>
+            {errors.password && <ErorrMsg msg={errors.password.message} />}
           </div>
 
           <button

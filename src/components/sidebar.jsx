@@ -1,4 +1,5 @@
 import { createElement } from 'react';
+import { toast, Toaster } from 'react-hot-toast';
 import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import Cookies from 'js-cookie';
@@ -46,11 +47,13 @@ export const Sidebar = () => {
     e.preventDefault();
     localStorage.removeItem('user');
     Cookies.remove('token');
+    toast.success('Berhasil Logout');
     navigate('/login', { replace: true });
   };
 
   return (
     <div className="flex h-screen w-20 flex-col justify-between overflow-y-auto border-r bg-white md:w-64">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="px-4 pb-6">
         <span className="flex justify-start">
           <img src={Logo} alt="logo" className="h-16 w-28" />

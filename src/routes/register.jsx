@@ -1,34 +1,33 @@
-import Cookies from 'js-cookie';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  EyeOffIcon,
-  AtSymbolIcon,
-  EyeIcon,
-  UserIcon,
-  DeviceMobileIcon
-} from '@heroicons/react/outline';
+import { useForm } from 'react-hook-form';
+import { toast, Toaster } from 'react-hot-toast';
+import { EyeOffIcon, EyeIcon } from '@heroicons/react/outline';
+
+import { ErorrMsg } from '../components/error-message';
+import { FormLabel, InputText } from '../ui/forms';
 
 import { user as userApi } from '../api';
 
 import Logo from '../logo.svg';
-import AuthContext from '../context/auth';
 
 export const Register = () => {
-  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [input, setInput] = useState({
-    name: '',
-    imageUrl: '',
-    email: '',
-    password: ''
+  const {
+    register,
+    formState: { errors },
+    handleSubmit
+  } = useForm({
+    defaultValues: {
+      name: '',
+      image_url: '',
+      email: '',
+      password: ''
+    }
   });
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
+  const [showPassword, setShowPassword] = useState(false);
 
   // visible password
   const handlePasswordVisibility = (e) => {
@@ -36,30 +35,19 @@ export const Register = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data, e) => {
     try {
-      const { name, imageUrl, email, password } = input;
-      const body = {
-        name,
-        image_url: imageUrl,
-        email,
-        password
-      };
-
-      await userApi.register(body).then(() => {
+      await userApi.register(data).then(() => {
+        toast.success('Akun berhasil dibuat');
         // redirect to login
         navigate('/login', { replace: true });
       });
     } catch (err) {
+      e.target.reset();
       console.log(err.response?.data);
-      setInput({ ...input, name: '', imageUrl: '', email: '', password: '' });
+      toast.error('Terjadi kesalahan!');
     }
   };
-
-  useEffect(() => {
-    if (user) navigate('/dashboard', { replace: true });
-  });
 
   useEffect(() => {
     document.title = 'Register';
@@ -67,6 +55,7 @@ export const Register = () => {
 
   return (
     <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="mx-auto max-w-lg">
         <img src={Logo} alt="logo" className="mx-auto h-24 w-auto" />
 
@@ -76,102 +65,66 @@ export const Register = () => {
         </p>
 
         <form
-          onSubmit={handleRegister}
+          onSubmit={handleSubmit(onSubmit)}
           className="mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl"
         >
           <div>
-            <label htmlFor="name" className="text-sm font-medium">
-              Nama
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="name"
-                type="text"
-                name="name"
-                value={input.name}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan nama"
-              />
-
-              <span className="absolute inset-y-0 right-4 inline-flex items-center">
-                <UserIcon className="h-5 w-5 text-zinc-400" />
-              </span>
-            </div>
+            <FormLabel htmlFor="name">Nama</FormLabel>
+            <InputText
+              id="name"
+              placeholder="Masukkan nama"
+              {...register('name', { required: 'Nama tidak boleh kosong' })}
+            />
+            {errors.name && <ErorrMsg msg={errors.name.message} />}
           </div>
 
           <div>
-            <label htmlFor="imageUrl" className="text-sm font-medium">
-              Foto Profil
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="imageUrl"
-                type="text"
-                name="imageUrl"
-                value={input.imageUrl}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan nama"
-              />
-
-              <span className="absolute inset-y-0 right-4 inline-flex items-center">
-                <DeviceMobileIcon className="h-5 w-5 text-zinc-400" />
-              </span>
-            </div>
+            <FormLabel htmlFor="imageUrl">Foto Profil</FormLabel>
+            <InputText
+              id="imageUrl"
+              placeholder="Masukkan foto profil (url)"
+              {...register('image_url')}
+            />
           </div>
 
           <div>
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="email"
-                type="email"
-                name="email"
-                value={input.email}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan email"
-              />
-
-              <span className="absolute inset-y-0 right-4 inline-flex items-center">
-                <AtSymbolIcon className="h-5 w-5 text-zinc-400" />
-              </span>
-            </div>
+            <FormLabel htmlFor="email">Email</FormLabel>
+            <InputText
+              id="email"
+              placeholder="Masukkan email"
+              {...register('email', {
+                required: 'Email tidak boleh kosong',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Format email tidak sesuai'
+                }
+              })}
+            />
+            {errors.email && <ErorrMsg msg={errors.email.message} />}
           </div>
-
           <div>
-            <label htmlFor="password" className="text-sm font-medium">
-              Password
-            </label>
-
-            <div className="relative mt-1">
-              <input
-                id="password"
-                type={showPassword ? 'text' : 'password'}
-                name="password"
-                value={input.password}
-                onChange={handleChange}
-                className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                placeholder="Masukkan password"
-              />
-
+            <FormLabel htmlFor="password">Password</FormLabel>
+            <InputText
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              className="pr-12"
+              placeholder="Masukkan password"
+              {...register('password', {
+                required: 'Password tidak boleh kosong'
+              })}
+            >
               <button
                 className="absolute inset-y-0 right-4 inline-flex items-center"
                 onClick={handlePasswordVisibility}
               >
                 {showPassword ? (
-                  <EyeOffIcon className="h-5 w-5 text-zinc-400" />
+                  <EyeOffIcon aria-hidden className="h-5 w-5 text-zinc-400" />
                 ) : (
-                  <EyeIcon className="h-5 w-5 text-zinc-400" />
+                  <EyeIcon aria-hidden className="h-5 w-5 text-zinc-400" />
                 )}
               </button>
-            </div>
+            </InputText>
+            {errors.password && <ErorrMsg msg={errors.password.message} />}
           </div>
 
           <button
