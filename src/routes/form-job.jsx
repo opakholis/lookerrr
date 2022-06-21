@@ -25,7 +25,7 @@ export const FormJob = () => {
 
   return (
     <div className="mx-auto h-full w-full p-6 md:p-8">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-8 space-y-4">
         <section className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <label htmlFor="title" className="mb-2 block text-sm font-medium">
@@ -196,7 +196,7 @@ export const FormJob = () => {
           </div>
         </section>
 
-        <div className="pb-8">
+        <div className="pb-4">
           <label
             htmlFor="job_status"
             className="mb-2 block text-sm font-medium"
@@ -223,7 +223,7 @@ export const FormJob = () => {
 
         <button
           type="submit"
-          className="mt-8 rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
         >
           Submit
         </button>
