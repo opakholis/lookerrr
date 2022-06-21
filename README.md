@@ -33,4 +33,4 @@ Start the server
 
 ## Demo
 
-[lookerrr.vercel.app](ttps://lookerrr.vercel.app)
+[lookerrr.vercel.app](https://lookerrr.vercel.app)
