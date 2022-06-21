@@ -38,7 +38,10 @@ export const Datatable = ({ data, columns }) => {
               >
                 {row.cells.map((cell) => {
                   return (
-                    <td className="px-6 py-4" {...cell.getCellProps()}>
+                    <td
+                      className="px-6 py-4 capitalize"
+                      {...cell.getCellProps()}
+                    >
                       {cell.render('Cell')}
                     </td>
                   );
