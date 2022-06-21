@@ -5,17 +5,17 @@ import { useForm } from 'react-hook-form';
 import { job } from '../api';
 
 export const FormJob = () => {
-  const { register, handleSubmit } = useForm({
+  const { register, reset, handleSubmit } = useForm({
     defaultValues: {
       job_status: 0
     }
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, e) => {
     try {
       const token = Cookies.get('token');
-      const res = job.create(data, token).then((res) => {
-        console.log(res);
+      const res = job.create(data, token).then(() => {
+        e.target.reset();
       });
       console.log(`response: ${res}`);
     } catch (err) {
@@ -105,7 +105,7 @@ export const FormJob = () => {
             type="text"
             className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
             placeholder="Melakukan implementasi tampilan web"
-            {...register('job_description', { required: true })}
+            {...register('job_description')}
           />
         </div>
 
@@ -138,7 +138,7 @@ export const FormJob = () => {
               id="job_type"
               {...register('job_type')}
             >
-              <option>--Pilih--</option>
+              <option value="">--Pilih--</option>
               <option value="on-site">On-site</option>
               <option value="hybird">Hybird</option>
               <option value="remote">Full Remote</option>
@@ -157,7 +157,7 @@ export const FormJob = () => {
               id="job_tenure"
               {...register('job_tenure')}
             >
-              <option>--Pilih--</option>
+              <option value="">--Pilih--</option>
               <option value="magang">Magang</option>
               <option value="ful-ltime">Full-time</option>
               <option value="part-time">Part-time</option>
@@ -179,7 +179,7 @@ export const FormJob = () => {
               type="text"
               className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="8000000"
-              {...register('salary_min')}
+              {...register('salary_min', { required: true })}
             />
           </div>
 
@@ -195,7 +195,7 @@ export const FormJob = () => {
               type="text"
               className="w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm"
               placeholder="13000000"
-              {...register('salary_max')}
+              {...register('salary_max', { required: true })}
             />
           </div>
         </section>
@@ -222,12 +222,22 @@ export const FormJob = () => {
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
-        >
-          Submit
-        </button>
+        <div className="flex items-center space-x-4">
+          <button
+            type="submit"
+            className="rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+          >
+            Submit
+          </button>
+
+          <button
+            type="reset"
+            onClick={reset}
+            className="rounded bg-red-500 py-2 px-4 font-bold text-white hover:bg-blue-700"
+          >
+            Reset
+          </button>
+        </div>
       </form>
     </div>
   );
