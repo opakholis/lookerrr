@@ -14,7 +14,12 @@ const user = {
 const job = {
   all: () => client.get('/job-vacancy'),
   detail: (id) => client.get(`/job-vacancy/${id}`),
-  add: (payload) => client.post('/job-vacancy', payload),
+  create: (payload, token) =>
+    client.post('/job-vacancy', payload, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }),
   edit: (id, payload) => client.put(`/job-vacancy/${id}`, payload),
   delete: (id, token) =>
     client.delete(`/job-vacancy/${id}`, {

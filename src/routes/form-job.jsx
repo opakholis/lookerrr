@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -7,7 +8,15 @@ export const FormJob = () => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+    try {
+      const token = Cookies.get('token');
+      const res = job.create(data, token).then((res) => {
+        console.log(res);
+      });
+      console.log(`response: ${res}`);
+    } catch (err) {
+      console.log(err.response?.data);
+    }
   };
 
   useEffect(() => {
@@ -200,8 +209,10 @@ export const FormJob = () => {
               id="job_status"
               name="job_status"
               className="h-5 w-5 rounded"
-              defaultValue={0}
               value={1}
+              onClick={(e) => {
+                console.log(e.target.value);
+              }}
               {...register('job_status')}
             />
             <span className="absolute inset-y-0 ml-2 inline-flex items-center rounded-md border border-blue-500 bg-blue-50 px-3 py-3 text-sm text-zinc-800">
